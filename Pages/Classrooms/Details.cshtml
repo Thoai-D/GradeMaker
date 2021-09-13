@@ -1,0 +1,74 @@
+﻿@page
+@model GradeMaker.Pages.Classrooms.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Classroom</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(x => x.Classroom.ClassName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Classroom.ClassName)
+        </dd>
+        <dt class="col-sm-2">
+            Class Teacher
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Classroom.ClassTeacher.FirstMidName)
+        </dd>
+        <dt class="col-sm-2">
+            Terms
+        </dt>
+        <dd class="col-sm-10">
+            <a href="/Terms?ClassroomId=@Model.Classroom.ClassroomID">View me</a>
+        </dd>
+        <dt class="col-sm-2">
+            Students
+        </dt>
+
+        <dd>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        @foreach (var term in Model.Classroom.ClassroomTerms.OrderBy(x => x.ClassroomTermName))
+                        {
+                            <th>@term.ClassroomTermName</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Students)
+                    {
+                        <tr>
+                            <td>
+                                @item.FirstName
+                            </td>
+                            <td>
+                                @item.LastName
+                            </td>
+                            @foreach (var x in item.Grades)
+                            {
+                                <td>@x</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </dd>
+
+
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Classroom.ClassroomID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
