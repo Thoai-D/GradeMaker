@@ -21,23 +21,15 @@ namespace GradeMaker.Pages.Terms
 
         public IList<ClassroomTerm> ClassroomTerm { get;set; }
 
-        public int? ClassroomID { get; set; }
+        public int ClassroomID { get; set; }
 
-        public async Task OnGetAsync(int? classroomId)
+        public async Task OnGetAsync(int classroomId)
         {
             ClassroomID = classroomId;
-            if (classroomId == null)
-            {
-                ClassroomTerm = await _context.ClassroomTerms
-                    .Include(c => c.Classroom).ToListAsync();
-            }
-            else
-            {
-                ClassroomTerm = await _context.ClassroomTerms
-                    .Include(c => c.Classroom)
-                    .Where(c => c.ClassroomID == classroomId)
-                    .ToListAsync();
-            }
+            ClassroomTerm = await _context.ClassroomTerms
+                .Include(c => c.Classroom)
+                .Where(c => c.ClassroomID == classroomId)
+                .ToListAsync();
         }
     }
 }

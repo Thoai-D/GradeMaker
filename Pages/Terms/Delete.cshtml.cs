@@ -48,13 +48,14 @@ namespace GradeMaker.Pages.Terms
 
             ClassroomTerm = await _context.ClassroomTerms.FindAsync(id);
 
+            int classid = ClassroomTerm.ClassroomID;
             if (ClassroomTerm != null)
             {
                 _context.ClassroomTerms.Remove(ClassroomTerm);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { classroomID = classid });
         }
     }
 }

@@ -21,25 +21,29 @@ namespace GradeMaker.Pages.Terms
 
         public IActionResult OnGet()
         {
-        ViewData["ClassroomID"] = new SelectList(_context.Classrooms, "ClassroomID", "ClassroomID");
+            //ViewData["ClassroomID"] = new SelectList(_context.Classrooms, "ClassroomID", "ClassroomID");
             return Page();
         }
 
         [BindProperty]
         public ClassroomTerm ClassroomTerm { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int ClassroomID { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            ClassroomTerm.ClassroomID = ClassroomID;
+
             _context.ClassroomTerms.Add(ClassroomTerm);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { classroomID = ClassroomID });
         }
     }
 }
