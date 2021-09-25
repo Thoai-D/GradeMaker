@@ -55,7 +55,7 @@ namespace GradeMaker.Pages.Terms
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index", new { classroomID = classid });
+            return RedirectToPage("/Classrooms/Details", new { ID = classid });
         }
     }
 }

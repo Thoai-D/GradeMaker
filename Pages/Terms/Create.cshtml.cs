@@ -43,7 +43,7 @@ namespace GradeMaker.Pages.Terms
             _context.ClassroomTerms.Add(ClassroomTerm);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index", new { classroomID = ClassroomID });
+            return RedirectToPage("/Classrooms/Details", new { ID = ClassroomID });
         }
     }
 }
