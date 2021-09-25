@@ -19,12 +19,36 @@ namespace GradeMaker.Pages.Classrooms
             _context = context;
         }
 
-        public IList<Classroom> Classrooms { get;set; }
+        public IList<ClassroomVM> Classrooms { get;set; }
 
         public async Task OnGetAsync()
         {
 
-            Classrooms = await _context.Classrooms.ToListAsync();
+            Classrooms = await _context.Classrooms.Include(x => x.ClassTeacher)
+                .Include(x => x.ClassroomTerms)
+                    .ThenInclude(z => z.Enrollments)
+                .Select(x => new ClassroomVM(x))
+                .ToListAsync();
         }
     }
+
+    public class ClassroomVM
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string TeacherName { get; set; }
+        public int StudentCount { get; set; }
+
+        public ClassroomVM(Classroom cr)
+        {
+            ID = cr.ClassroomID;
+            Name = cr.ClassName;
+            TeacherName = cr.ClassTeacher.FirstMidName;
+            StudentCount = cr.ClassroomTerms.SelectMany(x => x.Enrollments)
+                .Select(x => x.StudentID)
+                .Distinct()
+                .Count();
+        }
+    }
+
 }
