@@ -68,7 +68,7 @@ namespace GradeMaker.Pages.Terms
                 }
             }
 
-            return RedirectToPage("./Index", new { classroomID = ClassroomTerm.ClassroomID });
+            return RedirectToPage("/Classrooms/Details", new { ID = ClassroomTerm.ClassroomID });
         }
 
         private bool ClassroomTermExists(int id)

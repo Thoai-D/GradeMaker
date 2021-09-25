@@ -16,7 +16,12 @@
             <th>
                 Class Name
             </th>
-            <th></th>
+            <th>
+                Student Count
+            </th>
+            <th>
+                Teacher
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -26,8 +31,12 @@
                 <a asp-page="./Details" asp-route-id="@item.ID">@item.Name</a> 
             </td>
             <td>
-                <span>Teacher:  @item.TeacherName</span>
-                <span>Student Count: @item.StudentCount</span>
+                @item.StudentCount
+            </td>
+            <td>
+                @item.TeacherName
+            </td>
+            <td>
                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> 
             </td>
         </tr>

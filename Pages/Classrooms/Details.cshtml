@@ -32,7 +32,6 @@
         <dt class="col-sm-2">
             Students
         </dt>
-
         <dd>
             <table class="table">
                 <thead>
@@ -41,25 +40,27 @@
                         <th>Last Name</th>
                         @foreach (var term in Model.Classroom.ClassroomTerms.OrderBy(x => x.ClassroomTermName))
                         {
-                            <th>@term.ClassroomTermName</th>
+                            <th>
+                                <a asp-page="/Terms/Edit" asp-route-id="@term.ClassroomTermID">@term.ClassroomTermName</a>
+                            </th>
                         }
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Students)
+                    @foreach (var student in Model.Students)
                     {
-                        <tr>
-                            <td>
-                                @item.FirstName
-                            </td>
-                            <td>
-                                @item.LastName
-                            </td>
-                            @foreach (var x in item.Grades)
-                            {
-                                <td>@x</td>
-                            }
-                        </tr>
+                    <tr>
+                        <td>
+                            @student.FirstName
+                        </td>
+                        <td>
+                            @student.LastName
+                        </td>
+                        @foreach (var term in Model.Classroom.ClassroomTerms.OrderBy(x => x.ClassroomTermName))
+                        {
+                            <td>@student.Enrollments.SingleOrDefault(x => x.ClassroomTermID == term.ClassroomTermID)?.Grade</td>
+                        }
+                    </tr>
                     }
                 </tbody>
             </table>
