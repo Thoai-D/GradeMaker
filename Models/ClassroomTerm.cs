@@ -16,7 +16,5 @@ namespace GradeMaker.Models
         public virtual Classroom Classroom { get; set; }
 
         public virtual ICollection<GradingSection> GradingSections { get; set; }
-
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using GradeMaker.Models;
+using GradeMaker.Extensions;
 
 namespace GradeMaker.Data
 {
@@ -22,15 +23,29 @@ namespace GradeMaker.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
 
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Classroom>().ToTable("Classroom");
+        //    modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
+        //    modelBuilder.Entity<Student>().ToTable("Student");
+        //    modelBuilder.Entity<Teacher>().ToTable("Teacher");
+        //    modelBuilder.Entity<ClassroomTerm>().ToTable("ClassroomTerm");
+        //    modelBuilder.Entity<GradingSection>().ToTable("GradingSection");
+        //    modelBuilder.Entity<SubGradingSection>().ToTable("SubGradingSection");
+        //}
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite(@"Data source=School.db");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Classroom>().ToTable("Classroom");
-            modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
-            modelBuilder.Entity<Student>().ToTable("Student");
-            modelBuilder.Entity<Teacher>().ToTable("Teacher");
-            modelBuilder.Entity<ClassroomTerm>().ToTable("ClassroomTerm");
-            modelBuilder.Entity<GradingSection>().ToTable("GradingSection");
-            modelBuilder.Entity<SubGradingSection>().ToTable("SubGradingSection");
+            modelBuilder.Seed();
         }
+
     }
+
+
 }

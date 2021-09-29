@@ -27,8 +27,7 @@ namespace GradeMaker
         {
             services.AddRazorPages();
 
-            services.AddDbContext<SchoolContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SchoolContext")));
+            services.AddDbContext<SchoolContext>();
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 

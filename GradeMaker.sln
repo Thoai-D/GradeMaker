@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeMaker", "GradeMaker.csproj", "{E59F3AF8-F5F1-4087-A98F-1C60851D0DAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login System Test", "..\Login System Test\Login System Test.csproj", "{6050B6F6-0373-4E01-A063-39309C345625}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Login System Test", "..\Login System Test\Login System Test.csproj", "{6050B6F6-0373-4E01-A063-39309C345625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

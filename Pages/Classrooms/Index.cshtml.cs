@@ -25,8 +25,7 @@ namespace GradeMaker.Pages.Classrooms
         {
 
             Classrooms = await _context.Classrooms.Include(x => x.ClassTeacher)
-                .Include(x => x.ClassroomTerms)
-                    .ThenInclude(z => z.Enrollments)
+                .Include(x => x.StudentClassrooms)
                 .Select(x => new ClassroomVM(x))
                 .ToListAsync();
         }
@@ -44,10 +43,7 @@ namespace GradeMaker.Pages.Classrooms
             ID = cr.ClassroomID;
             Name = cr.ClassName;
             TeacherName = cr.ClassTeacher.FirstMidName;
-            StudentCount = cr.ClassroomTerms.SelectMany(x => x.Enrollments)
-                .Select(x => x.StudentID)
-                .Distinct()
-                .Count();
+            StudentCount = cr.StudentClassrooms.Count;
         }
     }
 

@@ -1,0 +1,48 @@
+﻿@page
+@model GradeMaker.Pages.GradingSections.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GradingSection[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GradingSection[0].Weighting)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GradingSection[0].Score)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.GradingSection) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weighting)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.GradingSectionID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.GradingSectionID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.GradingSectionID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

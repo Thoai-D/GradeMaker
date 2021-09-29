@@ -15,6 +15,7 @@ namespace GradeMaker.Models
 
         public double Score { get; set; }
 
+        public virtual ClassroomTerm ClassroomTerm { get; set; }
         public virtual ICollection<SubGradingSection> SubGradingSections { get; set; }
     }
 }

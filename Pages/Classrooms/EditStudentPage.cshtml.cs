@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,11 +10,10 @@ using GradeMaker.Models;
 
 namespace GradeMaker.Pages.Classrooms
 {
-    public class DetailsModel : PageModel
+    public class EditStudentPageModel : PageModel
     {
         private readonly GradeMaker.Data.SchoolContext _context;
-
-        public DetailsModel(GradeMaker.Data.SchoolContext context)
+        public EditStudentPageModel(GradeMaker.Data.SchoolContext context)
         {
             _context = context;
         }
@@ -34,8 +33,12 @@ namespace GradeMaker.Pages.Classrooms
                 .Include(c => c.ClassroomTerms)
                 .AsNoTracking().FirstOrDefaultAsync(m => m.ClassroomID == id);
 
-            var students = await _context.Students
-                .Include(x => x.Enrollments)
+            var students = await _context.Classrooms
+                .Include(x => x.StudentClassrooms)
+                    .ThenInclude(x => x.Classroom)
+                .Where(x => x.ClassroomID == id)
+                .SelectMany(x => x.StudentClassrooms)
+                .Select(x => x.Student)
                 .ToListAsync();
 
             Students = students.Select(x => new StudentClassroomVM()
@@ -55,14 +58,5 @@ namespace GradeMaker.Pages.Classrooms
             }
             return Page();
         }
-    }
-
-    public class StudentClassroomVM
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public List<Enrollment> Enrollments { get; set; }
-
-
     }
 }
