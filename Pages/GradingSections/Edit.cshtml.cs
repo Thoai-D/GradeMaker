@@ -23,14 +23,23 @@ namespace GradeMaker.Pages.GradingSections
         [BindProperty]
         public GradingSection GradingSection { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        [BindProperty(SupportsGet = true)]
+        public int TermId { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int GradingSectionId { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int? GradingSectionId)
         {
-            if (id == null)
+            if (GradingSectionId == null)
             {
                 return NotFound();
             }
 
-            GradingSection = await _context.GradingSections.FirstOrDefaultAsync(m => m.GradingSectionID == id);
+            GradingSection = await _context.GradingSections
+                .Include(x => x.ClassroomTerm)
+                .Include(x => x.SubGradingSections)
+                .FirstOrDefaultAsync(m => m.GradingSectionID == GradingSectionId);
 
             if (GradingSection == null)
             {
@@ -66,7 +75,7 @@ namespace GradeMaker.Pages.GradingSections
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Terms/Edit", new { ID = TermId });
         }
 
         private bool GradingSectionExists(int id)

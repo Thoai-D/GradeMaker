@@ -13,7 +13,7 @@ namespace GradeMaker.Models
 
         public double Weighting { get; set; }
 
-        public double Score { get; set; }
+        public int ClassroomTermID { get; set; }
 
         public virtual ClassroomTerm ClassroomTerm { get; set; }
         public virtual ICollection<SubGradingSection> SubGradingSections { get; set; }

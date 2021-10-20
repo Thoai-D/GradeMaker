@@ -13,7 +13,7 @@ namespace GradeMaker.Models
 
         public int ClassTeacherID { get; set; }
 
-        public virtual Teacher ClassTeacher { get; set; }
+        public virtual Teacher ClassTeacher { get; set; } 
 
         public virtual ICollection<StudentClassroom> StudentClassrooms { get; set; }
         public virtual ICollection<ClassroomTerm> ClassroomTerms { get; set; }

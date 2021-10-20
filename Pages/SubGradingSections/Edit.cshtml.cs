@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using GradeMaker.Data;
 using GradeMaker.Models;
 
-namespace GradeMaker.Pages.Terms
+namespace GradeMaker.Pages.SubGradingSections
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,9 @@ namespace GradeMaker.Pages.Terms
         }
 
         [BindProperty]
-        public ClassroomTerm ClassroomTerm { get; set; }
+        public SubGradingSection SubGradingSection { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int GradingSectionId { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,18 +32,12 @@ namespace GradeMaker.Pages.Terms
                 return NotFound();
             }
 
+            SubGradingSection = await _context.SubGradingSections.FirstOrDefaultAsync(m => m.SubGradingSectionID == id);
 
-            ClassroomTerm = await _context.ClassroomTerms
-                .Include(c => c.Classroom)
-                .Include(c => c.GradingSections)
-                    .ThenInclude(v => v.SubGradingSections)
-                .FirstOrDefaultAsync(m => m.ClassroomTermID == id);
-
-            if (ClassroomTerm == null)
+            if (SubGradingSection == null)
             {
                 return NotFound();
             }
-           ViewData["ClassroomID"] = new SelectList(_context.Classrooms, "ClassroomID", "ClassroomID");
             return Page();
         }
 
@@ -54,7 +50,7 @@ namespace GradeMaker.Pages.Terms
                 return Page();
             }
 
-            _context.Attach(ClassroomTerm).State = EntityState.Modified;
+            _context.Attach(SubGradingSection).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +58,7 @@ namespace GradeMaker.Pages.Terms
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClassroomTermExists(ClassroomTerm.ClassroomTermID))
+                if (!SubGradingSectionExists(SubGradingSection.SubGradingSectionID))
                 {
                     return NotFound();
                 }
@@ -72,12 +68,12 @@ namespace GradeMaker.Pages.Terms
                 }
             }
 
-            return RedirectToPage("/Classrooms/Details", new { ID = ClassroomTerm.ClassroomID });
+            return RedirectToPage("./Index");
         }
 
-        private bool ClassroomTermExists(int id)
+        private bool SubGradingSectionExists(int id)
         {
-            return _context.ClassroomTerms.Any(e => e.ClassroomTermID == id);
+            return _context.SubGradingSections.Any(e => e.SubGradingSectionID == id);
         }
     }
 }

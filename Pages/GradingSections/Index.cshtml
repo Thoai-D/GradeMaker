@@ -19,9 +19,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.GradingSection[0].Weighting)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GradingSection[0].Score)
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -34,9 +32,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Weighting)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Score)
-            </td>
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.GradingSectionID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.GradingSectionID">Details</a> |

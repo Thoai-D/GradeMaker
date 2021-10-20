@@ -1,4 +1,5 @@
-﻿@page
+﻿@page "{id}"
+@using GradeMaker.Extensions
 @model GradeMaker.Pages.Terms.EditModel
 
 @{
@@ -14,16 +15,40 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ClassroomTerm.ClassroomTermID" />
-            <div class="form-group">
-                <label asp-for="ClassroomTerm.ClassroomID" class="control-label"></label>
-                <select asp-for="ClassroomTerm.ClassroomID" class="form-control" asp-items="ViewBag.ClassroomID"></select>
-                <span asp-validation-for="ClassroomTerm.ClassroomID" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="ClassroomTerm.ClassroomID" />
+
             <div class="form-group">
                 <label asp-for="ClassroomTerm.ClassroomTermName" class="control-label"></label>
                 <input asp-for="ClassroomTerm.ClassroomTermName" class="form-control" />
                 <span asp-validation-for="ClassroomTerm.ClassroomTermName" class="text-danger"></span>
             </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Section Name</th>
+                        <th>Weighting</th>
+                        <th>Max Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model.ClassroomTerm.GradingSections)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-page="/GradingSections/Edit" asp-route-termid="@x.ClassroomTermID" asp-route-gradingsectionid="@x.GradingSectionID">@x.Name</a>
+                            </td>
+                            <td>
+                                @x.Weighting%
+                            </td>
+                            <td>
+                                @x.MaxScore()
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -32,7 +57,8 @@
 </div>
 
 <div>
-      <a asp-page="/Classrooms/Details" asp-route-id="@Model.ClassroomTerm.ClassroomID">Back to Classroom</a> |
+    <a asp-page="/Classrooms/Details" asp-route-id="@Model.ClassroomTerm.ClassroomID">Back to Classroom</a> |
+    <a asp-page="/GradingSections/Create" asp-route-termid="@Model.ClassroomTerm.ClassroomTermID">Create new Section</a> |
     <a asp-page="/Terms/Delete" asp-route-id="@Model.ClassroomTerm.ClassroomTermID">Delete</a>
 </div>
 

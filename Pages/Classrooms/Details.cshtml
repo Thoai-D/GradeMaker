@@ -45,7 +45,7 @@
                     {
                     <tr>
                         <td>
-                            @student.FirstName
+                            <a asp-page="/Enrollments/Edit" asp-route-studentid="@student.StudentID">@student.FirstName</a>
                         </td>
                         <td>
                             @student.LastName

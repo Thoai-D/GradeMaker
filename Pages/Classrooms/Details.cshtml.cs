@@ -42,7 +42,8 @@ namespace GradeMaker.Pages.Classrooms
             {
                 FirstName = x.FirstMidName,
                 LastName = x.LastName,
-                Enrollments = x.Enrollments.ToList()
+                Enrollments = x.Enrollments.ToList(),
+                StudentID = x.ID
             }).ToList();
 
 
@@ -63,6 +64,6 @@ namespace GradeMaker.Pages.Classrooms
         public string LastName { get; set; }
         public List<Enrollment> Enrollments { get; set; }
 
-
+        public int StudentID { get; set; }
     }
 }

@@ -7,16 +7,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GradeMaker.Data;
 using GradeMaker.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace GradeMaker.Pages.GradingSections
+namespace GradeMaker.Pages.SubGradingSections
 {
     public class CreateModel : PageModel
     {
         private readonly GradeMaker.Data.SchoolContext _context;
 
-        [BindProperty(SupportsGet = true)]
-        public int TermId { get; set; }
         public CreateModel(GradeMaker.Data.SchoolContext context)
         {
             _context = context;
@@ -28,7 +25,10 @@ namespace GradeMaker.Pages.GradingSections
         }
 
         [BindProperty]
-        public GradingSection GradingSection { get; set; }
+        public SubGradingSection SubGradingSection { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int GradingSectionId { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -37,13 +37,12 @@ namespace GradeMaker.Pages.GradingSections
             {
                 return Page();
             }
+            SubGradingSection.GradingSectionID = GradingSectionId;
 
-            GradingSection.ClassroomTermID = TermId;
-
-            _context.GradingSections.Add(GradingSection);
+            _context.SubGradingSections.Add(SubGradingSection);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Terms/Edit", new { ID = TermId});
+            return RedirectToPage("/GradingSections/Edit", new { TermId = GradingSectionId});
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{TermId}"
 @model GradeMaker.Pages.GradingSections.CreateModel
 
 @{
@@ -23,11 +23,7 @@
                 <input asp-for="GradingSection.Weighting" class="form-control" />
                 <span asp-validation-for="GradingSection.Weighting" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="GradingSection.Score" class="control-label"></label>
-                <input asp-for="GradingSection.Score" class="form-control" />
-                <span asp-validation-for="GradingSection.Score" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
