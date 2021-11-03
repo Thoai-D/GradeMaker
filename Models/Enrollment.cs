@@ -13,6 +13,8 @@ namespace GradeMaker.Models
 
         public int ClassroomTermID { get; set; }
 
+        public int SubGradingSectionID { get; set; }
+
         public double Grade { get; set; }
 
         public virtual SubGradingSection EnrollmentItem { get; set; }

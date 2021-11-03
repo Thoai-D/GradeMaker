@@ -41,8 +41,17 @@ namespace GradeMaker.Pages.Classrooms
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
+
+        /// <summary>
+        /// A post method that uses the data loaded onto the page to create a model
+        /// that is then stored in the database. It is only called after the user
+        /// makes a change to the database and is always called after a OnGet method.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
+            //If statement to check if all form values can be binded to the model.
+            //If some values in the form are missing (ex: Name, age) then it returns the page again.
             if (!ModelState.IsValid)
             {
                 return Page();
