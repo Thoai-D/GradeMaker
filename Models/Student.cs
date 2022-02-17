@@ -12,5 +12,7 @@ namespace GradeMaker.Models
         public string FirstMidName { get; set; }
         public virtual ICollection<StudentClassroom> StudentClassrooms { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
+
+        public virtual ICollection<ClassroomTerm> ClassTerms { get; set; }
     }
 }

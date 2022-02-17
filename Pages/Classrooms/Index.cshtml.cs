@@ -31,6 +31,9 @@ namespace GradeMaker.Pages.Classrooms
         }
     }
 
+    /// <summary>
+    /// Class used to display data from both students and the classroom
+    /// </summary>
     public class ClassroomVM
     {
         public int ID { get; set; }

@@ -3,14 +3,16 @@ using System;
 using GradeMaker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GradeMaker.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20220214133837_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,14 +57,9 @@ namespace GradeMaker.Migrations
                     b.Property<string>("ClassroomTermName")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("StudentID")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("ClassroomTermID");
 
                     b.HasIndex("ClassroomID");
-
-                    b.HasIndex("StudentID");
 
                     b.ToTable("ClassroomTerms");
 
@@ -106,8 +103,6 @@ namespace GradeMaker.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("EnrollmentID");
-
-                    b.HasIndex("ClassroomTermID");
 
                     b.HasIndex("StudentID");
 
@@ -399,11 +394,9 @@ namespace GradeMaker.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderDisplayName")
@@ -441,11 +434,9 @@ namespace GradeMaker.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
@@ -475,21 +466,11 @@ namespace GradeMaker.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GradeMaker.Models.Student", null)
-                        .WithMany("ClassTerms")
-                        .HasForeignKey("StudentID");
-
                     b.Navigation("Classroom");
                 });
 
             modelBuilder.Entity("GradeMaker.Models.Enrollment", b =>
                 {
-                    b.HasOne("GradeMaker.Models.ClassroomTerm", "ClassroomTerm")
-                        .WithMany()
-                        .HasForeignKey("ClassroomTermID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GradeMaker.Models.Student", "Student")
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentID")
@@ -501,8 +482,6 @@ namespace GradeMaker.Migrations
                         .HasForeignKey("SubGradingSectionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ClassroomTerm");
 
                     b.Navigation("EnrollmentItem");
 
@@ -620,8 +599,6 @@ namespace GradeMaker.Migrations
 
             modelBuilder.Entity("GradeMaker.Models.Student", b =>
                 {
-                    b.Navigation("ClassTerms");
-
                     b.Navigation("Enrollments");
 
                     b.Navigation("StudentClassrooms");

@@ -14,17 +14,27 @@ namespace GradeMaker.Pages.Enrollments
     {
         private readonly GradeMaker.Data.SchoolContext _context;
 
+        [BindProperty(SupportsGet = true)]
+        public int StudentId { get; set; }
+
         public IndexModel(GradeMaker.Data.SchoolContext context)
         {
             _context = context;
         }
 
-        public IList<Enrollment> Enrollment { get;set; }
+        public IList<Enrollment> Enrollments { get;set; }
 
         public async Task OnGetAsync()
         {
-            Enrollment = await _context.Enrollments
-                .Include(e => e.Student).ToListAsync();
+
+            Enrollments = await _context.Enrollments
+                .Where(e => e.StudentID == StudentId)
+                .Include(e => e.Student)
+                .Include(e => e.EnrollmentItem)
+                    .ThenInclude(x => x.GradingSection)
+                .Include(e => e.ClassroomTerm)
+                    .ThenInclude(t => t.Classroom)
+                .ToListAsync();
         }
     }
 }

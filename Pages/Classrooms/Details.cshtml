@@ -52,7 +52,7 @@
                         </td>
                         @foreach (var term in Model.Classroom.ClassroomTerms.OrderBy(x => x.ClassroomTermName))
                         {
-                            <td>@student.Enrollments.SingleOrDefault(x => x.ClassroomTermID == term.ClassroomTermID)?.Grade</td>
+                            <td>@student.Percentage(term.ClassroomTermID)</td>
                         }
                     </tr>
                     }

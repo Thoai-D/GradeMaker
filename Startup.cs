@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using GradeMaker.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace GradeMaker
 {
@@ -29,6 +30,16 @@ namespace GradeMaker
 
             services.AddDbContext<SchoolContext>();
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddDefaultIdentity<IdentityUser>(options => options.
+            SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().
+            AddEntityFrameworkStores<SchoolContext>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin"));
+                options.AddPolicy("StudentOnly", policy => policy.RequireClaim("Student"));
+                options.AddPolicy("TeacherOnly", policy => policy.RequireClaim("Teacher"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +61,8 @@ namespace GradeMaker
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

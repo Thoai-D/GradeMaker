@@ -64,11 +64,21 @@ namespace GradeMaker.Pages.Classrooms
         }
     }
 
+
+    /// <summary>
+    /// A class to represent the student to classroom relationship to display
+    /// on the webpage
+    /// </summary>
     public class StudentClassroomVM
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<Enrollment> Enrollments { get; set; }
+        public double Percentage(int termid)
+        {
+            var p = Enrollments.Where(x => x.ClassroomTermID == termid).Sum(x => x.Grade);
+            return p;
+        } 
 
         public int StudentID { get; set; }
     }

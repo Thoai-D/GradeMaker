@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using GradeMaker.Models;
 using GradeMaker.Extensions;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GradeMaker.Data
 {
-    public class SchoolContext : DbContext;
+    public class SchoolContext : IdentityDbContext
     {
         public SchoolContext (DbContextOptions<SchoolContext> options)
             : base(options)

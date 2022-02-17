@@ -15,12 +15,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Enrollment.StudentID" class="control-label"></label>
-                <select asp-for="Enrollment.StudentID" class ="form-control" asp-items="ViewBag.StudentID"></select>
+                <select asp-for="Enrollment.StudentID" class="form-control" asp-items="ViewBag.StudentID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Enrollment.ClassroomTermID" class="control-label"></label>
                 <input asp-for="Enrollment.ClassroomTermID" class="form-control" />
                 <span asp-validation-for="Enrollment.ClassroomTermID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Enrollment.SubGradingSectionID" class="control-label"></label>
+                <input asp-for="Enrollment.SubGradingSectionID" class="form-control" />
+                <span asp-validation-for="Enrollment.SubGradingSectionID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Enrollment.Grade" class="control-label"></label>

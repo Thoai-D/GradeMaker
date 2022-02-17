@@ -20,6 +20,7 @@ namespace GradeMaker.Models
         public virtual SubGradingSection EnrollmentItem { get; set; }
 
         public virtual Student Student { get; set; }
+        public virtual ClassroomTerm ClassroomTerm { get; set; }
 
     }
 }

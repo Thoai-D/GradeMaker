@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{studentid}"
 @model GradeMaker.Pages.Enrollments.IndexModel
 
 @{
@@ -14,28 +14,46 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Enrollment[0].ClassroomTermID)
+                Classroom
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Enrollment[0].Grade)
+                Classroom Term
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Enrollment[0].Student)
+                Grading Section
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enrollments[0].EnrollmentItem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enrollments[0].Grade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enrollments[0].Student)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Enrollment) {
+@foreach (var item in Model.Enrollments) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ClassroomTermID)
+                @Html.DisplayFor(modelItem => item.ClassroomTerm.Classroom.ClassName)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.ClassroomTerm.ClassroomTermName)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.EnrollmentItem.GradingSection.Name)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnrollmentItem.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Grade)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Student.ID)
+                @Html.DisplayFor(modelItem => item.Student.FirstMidName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.EnrollmentID">Edit</a> |

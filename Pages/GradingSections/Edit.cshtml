@@ -1,4 +1,4 @@
-﻿@page "{TermId}/{GradingSectionId}"
+﻿@page "{GradingSectionId}"
 @model GradeMaker.Pages.GradingSections.EditModel
 
 @{
@@ -57,7 +57,7 @@
 
 <div>
     <a asp-page="/Terms/Edit" asp-route-id="@Model.GradingSection.ClassroomTermID">Back to Term</a>
-    <a asp-page="/SubGradingSections/Create" asp-route-gradingsectionid="@Model.GradingSection.GradingSectionID">Create sub-section</a>
+    <a asp-page="/SubGradingSections/Create" asp-route-termid="@Model.GradingSection.ClassroomTermID" asp-route-gradingsectionid="@Model.GradingSection.GradingSectionID">Create sub-section</a>
 </div>
 
 @section Scripts {

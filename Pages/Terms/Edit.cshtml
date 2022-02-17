@@ -32,11 +32,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @*Code to retrieve information from the database that this model has access to*@
                     @foreach (var x in Model.ClassroomTerm.GradingSections)
                     {
                         <tr>
                             <td>
-                                <a asp-page="/GradingSections/Edit" asp-route-termid="@x.ClassroomTermID" asp-route-gradingsectionid="@x.GradingSectionID">@x.Name</a>
+                                <a asp-page="/GradingSections/Edit" asp-route-gradingsectionid="@x.GradingSectionID">@x.Name</a>
                             </td>
                             <td>
                                 @x.Weighting%

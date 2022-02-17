@@ -42,7 +42,7 @@ namespace GradeMaker.Pages.SubGradingSections
             _context.SubGradingSections.Add(SubGradingSection);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/GradingSections/Edit", new { TermId = GradingSectionId});
+            return RedirectToPage("/GradingSections/Edit", new { GradingSectionId = GradingSectionId});
         }
     }
 }
