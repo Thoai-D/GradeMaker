@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using GradeMaker.Data;
 using GradeMaker.Models;
+using GradeMaker.Extensions;
 
 namespace GradeMaker.Pages.Classrooms
 {
@@ -44,6 +45,8 @@ namespace GradeMaker.Pages.Classrooms
             //Retrieving students from the database
             var students = await _context.Students
                 .Include(x => x.Enrollments)
+                    .ThenInclude(x => x.EnrollmentItem)
+                        .ThenInclude(x => x.GradingSection)
                 .ToListAsync();
 
             //Creating a view model for the cshtml to display the data
@@ -74,11 +77,38 @@ namespace GradeMaker.Pages.Classrooms
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<Enrollment> Enrollments { get; set; }
+
+        /// <summary>
+        /// Method to return the score of each student.
+        /// Each score for each term will differ because the method takes in the parameter
+        /// of the term's id.
+        /// </summary>
+        /// <param name="termid"></param>
+        /// <returns>an int containing the student's percentage for the term</returns>
         public double Percentage(int termid)
-        {
-            var p = Enrollments.Where(x => x.ClassroomTermID == termid).Sum(x => x.Grade);
+        {   //Variable used to store the total score the student earned for a term
+            //var p = Enrollments.Where(x => x.ClassroomTermID == termid).Sum(x => x.Grade);
+            var allSubs = Enrollments.Where(x => x.ClassroomTermID == termid)
+                .Select(x => new { Grade = x.Grade, Sub = x.EnrollmentItem });
+
+            var gr = allSubs.GroupBy(x => x.Sub.GradingSection); // Key = GradingSection, Value: List<(Grade,Sub)>
+
+            var p = gr.Sum(x =>
+            {
+                var list = x.ToList();
+                var subs = list.Select(y => y.Sub).ToList();
+                var maxSum = subs.Sum(x => x.MaxScore);
+                var gradeSum = list.Sum(y => y.Grade);
+                var weight = x.Key.Weighting;
+                return (gradeSum * weight) / maxSum;
+            });
+
             return p;
+
         } 
+        
+        
+        
 
         public int StudentID { get; set; }
     }
